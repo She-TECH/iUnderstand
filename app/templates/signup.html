@@ -1,29 +1,68 @@
-
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Analyze your SGES feedback</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
-	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="static/js/signUp.js"></script>
-    <script type="text/javascript" src="static/js/myChart.js"></script>
-  </head>
+<html lang="en-US">
+<body>
 
-  <body>
-      <button id="btnSignUp" onclick="renderChart()" type="button">Analyze</button>
-      <div class="container">
-        <h3 class="text-muted">Analyze your SGES feedback</h3>
-      	<canvas id="myChart"></canvas>
-      </div>
-      
-      <p><a class="btn btn-lg btn-success" href="analyze" role="button">test</a></p>
+<h1>My Web Page</h1>
 
-      <footer class="footer">
-        <p>&copy; Developed by Vandana, Pratibha, Aishwarya and Kajal</p>
-      </footer>
+<div id="piechart"></div>
+<div id="barchart"></div>
+<div id="curve_chart" style="width: 900px; height: 500px"></div>
+<div id="curve_chart1" style="width: 900px; height: 500px"></div>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-    </div>
-  </body>
+<script type="text/javascript">
+// Load google charts
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+// Draw the chart and set the chart values
+function drawChart() {
+
+var txt = '[{"Task":"John", "Hours":30},{"Task":"John1", "Hours":3},{"Task":"John2", "Hours":10},{"Task":"John3", "Hours":20},{"Task":"John4", "Hours":15}]'
+obj = JSON.parse(txt);
+var result = [];
+result.push(['Task', 'Hours']);
+for (var i in obj)
+    result.push([obj[i].Task, obj[i].Hours]);
+
+  var data = google.visualization.arrayToDataTable(result);
+
+  // Optional; add a title and set the width and height of the chart
+  var options = {'title':'My Average Day', 'width':550, 'height':400};
+ var data1 = google.visualization.arrayToDataTable([
+          ['Year', 'Sales', 'Expenses'],
+          ['2004',  1000,      400],
+          ['2005',  1170,      460],
+          ['2006',  660,       1120],
+          ['2007',  1030,      540]
+        ]);
+ var data2 = google.visualization.arrayToDataTable([
+          ['Year', 'Sales'],
+          ['2004',  1000,],
+          ['2005',  1170,],
+          ['2006',  660,],
+          ['2007',  1030]
+        ]);
+
+        var options1 = {
+          title: 'Company Performance',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+  // Display the chart inside the <div> element with id="piechart"
+  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+  chart.draw(data, options);
+  chart = new google.visualization.BarChart(document.getElementById('barchart'));
+  chart.draw(data, options);
+chart= new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data1, options1);
+          chart = new google.visualization.LineChart(document.getElementById('curve_chart1'));
+
+        chart.draw(data2, options1);
+
+}
+</script>
+
+</body>
 </html>
-
